@@ -1,0 +1,9 @@
+{
+	"folders": [
+		{ "path": "pv/pv/the-api" },
+		{ "path": "pv/pv/the-discord-bot" },
+		{ "path": "pv/pv/the-contracts" },
+		{ "path": "pv/pv/the-website" }
+	],
+	"settings": {}
+}
