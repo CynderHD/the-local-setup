@@ -1,0 +1,19 @@
+services:
+  devcontainer:
+    container_name: progressive-victory
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      secrets:
+        - env
+    image: progressive-victory:latest
+    volumes:
+      - ./pv/pv:/home/pv/pv
+    ports:
+      - "3000:3000"
+      - "6006:6006"
+      - "8080:8080"
+
+secrets:
+  env:
+    file: ./.env
