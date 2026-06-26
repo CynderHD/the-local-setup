@@ -19,7 +19,7 @@ COPY --chown=pv:pv dump.sql /home/pv/dump.sql
 # Set up the local database
 RUN sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_general_ci/g' /home/pv/dump.sql \
     && sudo service mariadb start \
-    && sudo mariadb -u root -padmin -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'admin'; CREATE USER 'dev'@'%' IDENTIFIED BY 'admin'; GRANT ALL PRIVILEGES ON localhost.* TO 'dev'@'%'; FLUSH PRIVILEGES;" \
+    && sudo mariadb -u root -padmin -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'admin'; CREATE USER 'root'@'%' IDENTIFIED BY 'admin'; GRANT ALL PRIVILEGES ON localhost.* TO 'root'@'%'; CREATE USER 'dev'@'%' IDENTIFIED BY 'admin'; GRANT ALL PRIVILEGES ON localhost.* TO 'dev'@'%'; FLUSH PRIVILEGES;" \
     && mariadb -u root -padmin -e "CREATE DATABASE localhost;" \
     && mariadb -u root -padmin localhost < /home/pv/dump.sql \
     && rm /home/pv/dump.sql
