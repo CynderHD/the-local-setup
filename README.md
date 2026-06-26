@@ -24,13 +24,21 @@ Once the container is running, you can trivially run `./attach.sh` in your termi
 
 The repos are also symlinked to [./pv/pv/](./pv/pv/), and you can open that folder in whichever editor you'd like to edit the files as usual. You still have to run commands (`git pull`, `pnpm dev`, etc.) in an attached terminal, but such is life.
 
+If you use [VSCode](https://code.visualstudio.com/), you can run `code pv.code-workspace` in this directory to launch a workspace preconfigured with all the repositories.
+
+### Configuring Environment Variables
+
+If you need to adjust any environment variables, such as the-website's target API, you can edit run `vim ~/.bashrc` while attached into the docker container. If you're unfamiliar with vim, see [this cheatsheet](https://vim.rtorr.com/) for help. Once you're done, save and run `source ~/.bashrc` to get the new values into your terminal. Note that any other attached terminals will continue using the old values until you source them!
+
 ## Building new Images
 
 If you're not a tech leader, you can safely ignore this section. Have fun coding!
 
 Otherwise, I hope hell isn't too warm for you.
 
-First, create a `.env` file from the `.env.example` template, and fill it out. This will bake any provided environment variables into the docker image, **SO BE SURE YOU ONLY PASTE DEV SECRETS!** Purging prod secrets from the image repository would be a royal pain.
+First, create a `.env` file from the `.env.example` template, and fill it out. This will bake any provided environment variables into the docker image, **SO BE SURE YOU ONLY PASTE DEV SECRETS!** Purging prod secrets from the image repository ~~would~~ will be a royal pain.
+
+Second, run `gcloud auth login`, and then `./sqldump.sh`.
 
 Second, run `./build.sh`, followed by the usual `./start.sh` and `./attach.sh`. Make sure you can still run all repositories locally, and that they work as expected.
 

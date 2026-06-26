@@ -16,7 +16,6 @@ RUN usermod -l pv -d /home/pv -m node \
 FROM base AS copy
 USER pv
 WORKDIR /home/pv
-COPY --chown=pv:pv pv/.ssh/ /home/pv/.ssh/
 COPY --chown=pv:pv pv/.bashrc /home/pv/
 COPY --chown=pv:pv pv/install.sh /home/pv/
 
@@ -40,9 +39,8 @@ RUN --mount=type=secret,id=env \
 
 # Set up SSH authentication
 USER pv
-RUN chmod 700 .ssh \
-    && chmod 600 .ssh/id_pv \
-    && chmod 644 .ssh/id_pv.pub \
+RUN mkdir -p .ssh \
+    && chmod 700 .ssh \
     && ssh-keyscan github.com >> .ssh/known_hosts \
     && chmod 600 .ssh/known_hosts \
     && chmod 744 install.sh
