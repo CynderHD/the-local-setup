@@ -2,8 +2,6 @@
 
 mkdir -p pv
 
-docker pull ghcr.io/progressive-victory/the-local-setup:latest
-
 docker rm -f the-local-setup
 
 docker build \

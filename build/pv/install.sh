@@ -31,3 +31,5 @@ pnpm install
 cd ../the-website
 pnpm install
 cd ..
+
+sudo service mariadb start
