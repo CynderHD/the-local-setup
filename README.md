@@ -14,9 +14,14 @@ If anything isn't working, reach out to a tech leader for assistance.
 
 I'm going to refer to all scripts here as `*.sh`, but just know that there's a `*.bat` alternative for Windows users.
 
-To start, run `./login.sh`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
-
-Then, make sure docker is running (you can test by running `docker ps` in your terminal; if it doesn't fail, you're good to go), and run `./start.sh`. This will create a container which runs indefinitely, which is great for attaching into as a devcontainer.
+1. Run `./login.sh`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
+2. Verify that `~/.ssh/id_pv` and `~/.ssh/id_pv.pub` exist. If they don't, or you're not sure, see [Setting up SSH](#setting-up-ssh).
+3. Verify that your Github Personal Access Token exists in [.access-token](.access-token). If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
+4. Copy [home-template](./home-template) and rename it to [home](./home).
+    - Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.
+    - Feel free to update any other configs as you see fit! I'd recommend against removing anything from [install.sh](./home/install.sh) or [.bashrc](./home/.bashrc) unless you're confident in what you're doing though.
+5. Make sure docker is running. You can test by running `docker ps` in your terminal; if it doesn't fail, you're good to go!
+6. Run `./start.sh`. This will create a container which runs indefinitely, which is great for attaching into as a devcontainer.
 
 **Note:** This container will keep running until you kill it. You can kill it in the Docker Desktop, or by running `docker rm -f the-local-setup`.
 
@@ -47,7 +52,7 @@ You'll need a Github PAT (Personal Access Token) to be able to download the cont
 1. Log into your PV github, and go to Settings
 2. Go to 'Credentials', then 'Personal access tokens (classic)'
 3. Generate a new token, and add the `read:packages` scope.
-4. Copy the resulting keystring and paste it into `./.access-token` (you may need to create the file).
+4. Copy the resulting keystring and paste it into [.access-token](./.access-token) (you may need to create the file).
 
 If all of that is done properly, running `./login.sh` should succeed.
 

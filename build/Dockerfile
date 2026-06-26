@@ -14,7 +14,7 @@ RUN usermod -l pv -d /home/pv -m node \
 FROM base AS setup
 USER pv
 WORKDIR /home/pv
-COPY --chown=pv:pv pv/ /home/pv/
+COPY --chown=pv:pv dump.sql /home/pv/dump.sql
 
 # Set up the local database
 RUN sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_general_ci/g' /home/pv/dump.sql \
@@ -31,11 +31,11 @@ RUN sudo corepack enable
 
 # Copy the environment variables into bashrc
 RUN --mount=type=secret,id=env \
-    sudo awk '/^[A-Za-z_]/ {print "export " $0}' /run/secrets/env >> /home/pv/.bashrc
+    sudo awk '/^[A-Za-z_]/ {print "export " $0}' /run/secrets/env >> /home/pv/env.sh
 
 # Set up SSH authentication
 RUN mkdir -p .ssh \
     && chmod 700 .ssh \
     && ssh-keyscan github.com >> .ssh/known_hosts \
     && chmod 600 .ssh/known_hosts \
-    && chmod 744 install.sh
+    && chmod 744 env.sh
