@@ -2,4 +2,4 @@
 
 SET "DOCKER_CLI_HINTS=false"
 
-docker exec -it progressive-victory /bin/bash
+docker exec -it the-local-setup /bin/bash

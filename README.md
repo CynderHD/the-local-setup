@@ -30,6 +30,12 @@ If you use [VSCode](https://code.visualstudio.com/), you can run `code pv.code-w
 
 If you need to adjust any environment variables, such as the-website's target API, you can edit run `vim ~/.bashrc` while attached into the docker container. If you're unfamiliar with vim, see [this cheatsheet](https://vim.rtorr.com/) for help. Once you're done, save and run `source ~/.bashrc` to get the new values into your terminal. Note that any other attached terminals will continue using the old values until you source them!
 
+## SSH Keys
+
+If you've already created a PV ssh key on your github account, paste the private and public keys in this folder, named `id_pv` and `id_pv.pub` respectively.
+
+If you haven't, follow [this guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to create your keys. You don't need to add them to any SSH keyring or agent; just create the files, add your public key to your PV github account, and copy the files into this folder.
+
 ## Building new Images
 
 If you're not a tech leader, you can safely ignore this section. Have fun coding!

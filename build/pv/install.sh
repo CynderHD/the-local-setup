@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-chmod 600 .ssh/id_pv
-chmod 644 .ssh/id_pv.pub
-
 eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_pv
 

@@ -31,7 +31,8 @@ I recommend starting the image as a devcontainer (run `./start.sh progressive-vi
 
 ## 4. Publishing the Image
 
-1. Go to your github account, and create a classic personal access token (PAT) with `read:packages` and `write:packages` permissions. Copy the resulting key and paste it into `.access-token`.
-2. Run `./publish.sh <your-pv-github-username>`. You may need to set up a local passkey store first, depending on what it says.
+0. Go to your github account, and create a classic personal access token (PAT) with `read:packages` and `write:packages` permissions. Copy the resulting key and paste it into `../.access-token`.
+1. Log into docker (run `./login.sh` in the parent directory). You may need to set up a local passkey store first, depending on what it says.
+2. Run `./publish.sh`.
 
 Once the publish finishes, you should notify the team that a new version of `the-local-setup` is released for them to download.
