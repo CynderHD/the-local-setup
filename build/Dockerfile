@@ -4,17 +4,12 @@ WORKDIR /
 # Install OS dependencies
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
-    && apt-get -y install git vim nano sudo
+    && apt-get -y install git vim nano sudo mariadb-server
 
 RUN usermod -l pv -d /home/pv -m node \
     && groupmod -n pv node \
     && usermod -aG sudo pv \
     && echo "pv ALL=(ALL) NOPASSWD:ALL" >> etc/sudoers
-
-USER pv
-RUN echo "mariadb-server mariadb-server/root_password password admin" | sudo debconf-set-selections && \
-    echo "mariadb-server mariadb-server/root_password_again password admin" | sudo debconf-set-selections && \
-    sudo apt-get install -y mariadb-server
 
 FROM base AS setup
 USER pv
@@ -22,10 +17,11 @@ WORKDIR /home/pv
 COPY --chown=pv:pv pv/ /home/pv/
 
 # Set up the local database
-RUN sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_520_ci/g' /home/pv/dump.sql \
+RUN sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_general_ci/g' /home/pv/dump.sql \
     && sudo service mariadb start \
-    && sudo mariadb -u root -padmin -e "CREATE DATABASE localhost;" \
-    && sudo mariadb -u root -padmin localhost < /home/pv/dump.sql \
+    && sudo mariadb -u root -padmin -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'admin'; CREATE USER 'dev'@'%' IDENTIFIED BY 'admin'; GRANT ALL PRIVILEGES ON localhost.* TO 'dev'@'%'; FLUSH PRIVILEGES;" \
+    && mariadb -u root -padmin -e "CREATE DATABASE localhost;" \
+    && mariadb -u root -padmin localhost < /home/pv/dump.sql \
     && rm /home/pv/dump.sql
 
 # Set up corepack and pnpm

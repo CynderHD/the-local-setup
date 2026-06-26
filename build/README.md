@@ -11,7 +11,7 @@ First, you're going to need to dump the dev database into a local sql file so it
 0. If you haven't already, install `mysql` or `mariadb` locally.
 1. Run `gcloud auth login`
 2. Launch your cloud sql proxy, similar to if you were about to launch dbeaver.
-3. Run `./sqldump.sh` and type in the password for `root`.
+3. Run `./sqldump.sh <root-sql-password>`.
 
 If all goes well, you should have a brand new `dump.sql` file. Hooray!
 
