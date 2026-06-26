@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{ "path": "." },
-		{ "path": "pv/pv/the-api" },
-		{ "path": "pv/pv/the-discord-bot" },
-		{ "path": "pv/pv/the-contracts" },
-		{ "path": "pv/pv/the-website" }
+		{ "path": "pv/the-api" },
+		{ "path": "pv/the-discord-bot" },
+		{ "path": "pv/the-contracts" },
+		{ "path": "pv/the-website" }
 	],
 	"settings": {}
 }

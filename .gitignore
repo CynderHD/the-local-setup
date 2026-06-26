@@ -1,7 +1,2 @@
-ssh/id_pv
-ssh/id_pv.pub
-pv/*/
+pv/
 .access-token
-
-build/.env
-build/dump.sql
