@@ -16,17 +16,16 @@ RUN usermod -l pv -d /home/pv -m node \
 FROM base AS copy
 USER pv
 WORKDIR /home/pv
-COPY --chown=pv:pv pv/.bashrc /home/pv/
-COPY --chown=pv:pv pv/install.sh /home/pv/
+COPY --chown=pv:pv pv/ /home/pv/
 
 FROM copy AS setup
 USER root
 
 # Set up the local database
-RUN --mount=type=secret,id=sqldump \
-    service mariadb start \
-    && mysql -u root -padmin localhost < /run/secrets/sqldump \
-    && service mariadb stop
+RUN sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_520_ci/g' /home/pv/dump.sql \
+    && service mariadb start \
+    && mysql -u root -padmin -e "CREATE DATABASE localhost;" \
+    && mysql -u root -padmin localhost < /home/pv/dump.sql
 
 # Set up corepack and pnpm
 ENV COREPACK_HOME=/tmp/corepack
@@ -44,6 +43,3 @@ RUN mkdir -p .ssh \
     && ssh-keyscan github.com >> .ssh/known_hosts \
     && chmod 600 .ssh/known_hosts \
     && chmod 744 install.sh
-
-# Clone down the repositories and stall indefinitely
-CMD ["bash", "-c", "~/install.sh && tail -f /dev/null"]

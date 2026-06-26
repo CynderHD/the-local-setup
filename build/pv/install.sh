@@ -1,10 +1,5 @@
 #!/usr/bin/bash
 
-if [ ! -f "~/.ssh/id_pv" ] || [ ! -f "~/.ssh/id_pv.pub" ]; then
-    echo "ERROR: Missing ssh files! See the README for more details."
-    exit 1
-fi
-
 chmod 600 .ssh/id_pv
 chmod 644 .ssh/id_pv.pub
 

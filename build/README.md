@@ -31,6 +31,7 @@ I recommend starting the image as a devcontainer (run `./start.sh progressive-vi
 
 ## 4. Publishing the Image
 
-Finally, you can publish to the github registry via `./publish.sh`. Make sure your git credentials are correct!
+1. Go to your github account, and create a classic personal access token (PAT) with `read:packages` and `write:packages` permissions. Copy the resulting key and paste it into `.access-token`.
+2. Run `./publish.sh <your-pv-github-username>`. You may need to set up a local passkey store first, depending on what it says.
 
 Once the publish finishes, you should notify the team that a new version of `the-local-setup` is released for them to download.
