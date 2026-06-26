@@ -10,4 +10,4 @@ if [ ! -f "./.env" ]; then
     exit 1
 fi
 
-docker compose build
+docker compose build --no-cache

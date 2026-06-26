@@ -13,4 +13,4 @@ IF NOT EXIST "./.env" (
     exit /b 1
 )
 
-docker compose build
+docker compose build --no-cache

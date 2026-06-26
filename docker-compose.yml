@@ -3,7 +3,7 @@ services:
     container_name: progressive-victory
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
       secrets:
         - env
     image: progressive-victory:latest
@@ -16,4 +16,4 @@ services:
 
 secrets:
   env:
-    file: ./.env
+    file: .env
