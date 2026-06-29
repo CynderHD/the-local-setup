@@ -7,4 +7,4 @@ alias grep='grep --color=auto'
 eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_pv
 
-./env.sh
+source ./env.sh
