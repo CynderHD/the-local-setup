@@ -20,7 +20,7 @@ I'm going to refer to all scripts here as `*.sh`, but just know that there's a `
 4. Copy [home-template](./home-template) and rename it to [home](./home).
     - Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.
     - Feel free to update any other configs as you see fit! I'd recommend against removing anything from [install.sh](./home/install.sh) or [.bashrc](./home/.bashrc) unless you're confident in what you're doing though.
-5. Run `./login.sh`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
+5. Run `./login.sh YourGithubUsername`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
 6. Run `./start.sh`. This will create a container which runs indefinitely, which is great for attaching into as a devcontainer.
 
 **Note:** This container will keep running until you kill it. You can kill it in the Docker Desktop, or by running `docker rm -f the-local-setup`.
