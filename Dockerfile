@@ -2,6 +2,8 @@ FROM ghcr.io/progressive-victory/the-local-setup:latest AS base
 WORKDIR /home/pv
 USER root
 
+ENV DEBIAN_FRONTEND=interactive
+
 COPY --chown=pv:pv home/ /home/pv/
 
 RUN --mount=type=secret,id=ssh cp /run/secrets/ssh /home/pv/.ssh/id_pv
