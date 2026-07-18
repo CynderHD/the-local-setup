@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$1" ]; then
     echo "You have to pass your github username!"
