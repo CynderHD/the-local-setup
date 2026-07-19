@@ -16,6 +16,6 @@ USER pv
 RUN chmod 600 /home/pv/.ssh/id_pv \
     && chmod 644 /home/pv/.ssh/id_pv.pub \
     && chmod 744 install.sh \
-    && find /home/pv -maxdepth 3 \( -name '*.sh' -o -name '.bashrc' -o -name '.gitconfig' \) -exec sed -i 's/\r$//' {} +
+    && find /home/pv \( -name '*.sh' -o -name '.bashrc' -o -name '.gitconfig' \) -exec sed -i 's/\r$//' {} +
 
 CMD ["bash", "-c", "~/install.sh && tail -f /dev/null"]
