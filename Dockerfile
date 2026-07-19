@@ -17,4 +17,4 @@ RUN chmod 600 /home/pv/.ssh/id_pv \
     && chmod 644 /home/pv/.ssh/id_pv.pub \
     && chmod 744 install.sh
 
-CMD ["bash", "-c", "~/install.sh && tail -f /dev/null"]
+CMD ["bash", "-c", "find ~ -maxdepth 2 \\( -name '*.sh' -o -name '*.conf' -o -name '*.yaml' -o -name '*.yml' -o -name '.bashrc' -o -name '.gitconfig' \\) -exec sed -i 's/\\r$//' {} + ; ~/install.sh && tail -f /dev/null"]
