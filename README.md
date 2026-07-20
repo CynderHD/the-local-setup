@@ -16,6 +16,7 @@ I'm going to refer to all scripts here as `*.sh`, but just know that there's a `
 
 1. Make sure docker is running. You can test by running `docker ps` in your terminal; if it doesn't fail, you're good to go!
 2. Verify that `~/.ssh/id_pv` and `~/.ssh/id_pv.pub` exist. If they don't, or you're not sure, see [Setting up SSH](#setting-up-ssh).
+    - Don't use a password for your SSH key. If your SSH key has a password, the startup script will fail.
 3. Verify that your Github Personal Access Token exists in [.access-token](.access-token). If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
 4. Copy [home-template](./home-template) and rename it to [home](./home).
     - Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.

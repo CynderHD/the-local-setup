@@ -10,7 +10,7 @@ docker build \
     || exit 1
 
 docker run \
-    -p 3000:3000 -p 3001:3001 -p 6006:6006 -p 8080:8080 \
+    -p 3000:3000 -p 3001:3001 -p 6006:6006 -p 8080:8080 -p 3306:3306 \
     -v "$(dirname "$0")/pv:/home/pv/pv" -dit \
     --name the-local-setup the-local-setup:latest \
     || exit 1
