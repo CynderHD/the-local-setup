@@ -15,6 +15,7 @@ RUN chown pv /home/pv/.ssh/id_pv \
 USER pv
 RUN chmod 600 /home/pv/.ssh/id_pv \
     && chmod 644 /home/pv/.ssh/id_pv.pub \
-    && chmod 744 install.sh
+    && chmod 744 install.sh \
+    && find /home/pv \( -name '*.sh' -o -name '.bashrc' -o -name '.gitconfig' \) -exec sed -i 's/\r$//' {} +
 
 CMD ["bash", "-c", "~/install.sh && tail -f /dev/null"]
