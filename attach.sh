@@ -12,14 +12,16 @@ if [ "$1" ]; then
         C='cd pv/the-discord-bot'
     fi
 
-    if [ "$2" = "run" ]; then
-        C="$C && pnpm dev"
-    elif [ "$2" = "deploy" ]; then
-        if [ "$1" = "bot" ]; then
-            C="$C && pnpm dev-deploy"
-        else
-            echo "'deploy' can only be used with 'the-discord-bot'. Running 'dev'."
+    if [ "$C" != ""]; then # make sure first arg is valid input
+        if [ "$2" = "run" ]; then
             C="$C && pnpm dev"
+        elif [ "$2" = "deploy" ]; then
+            if [ "$1" = "bot" ]; then
+                C="$C && pnpm dev-deploy"
+            else
+                echo "'deploy' can only be used with 'the-discord-bot'. Running 'dev'."
+                C="$C && pnpm dev"
+            fi
         fi
     fi
 fi
