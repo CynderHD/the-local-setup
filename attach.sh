@@ -12,7 +12,7 @@ if [ "$1" ]; then
         C='cd pv/the-discord-bot'
     fi
 
-    if [ "$C" != ""]; then # make sure first arg is valid input
+    if [ "$C" != "" ]; then # make sure first arg is valid input
         if [ "$2" = "run" ]; then
             C="$C && pnpm dev"
         elif [ "$2" = "deploy" ]; then
