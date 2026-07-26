@@ -4,6 +4,8 @@ USER root
 
 RUN sed -i 's/^bind-address\s*=\s*.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
+RUN apt install sshpass
+
 ENV DEBIAN_FRONTEND=interactive
 
 COPY --chown=pv:pv home/ /home/pv/
