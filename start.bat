@@ -8,7 +8,7 @@ ECHO Enter your SSH password. If blank, hit enter:
 :: Batch doesn't support quiet passwords by default, use Powershell to retrieve the value securely.
 for /f "delims=" %%i in ('powershell -Command "$p = Read-Host -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($p))"') do set "SSH_PASSWORD=%%i"
 
-ssh-keygen -y -P "%PASSPHRASE%" -f "%KEY_PATH%" >nul 2>&1
+ssh-keygen -y -P "%SSH_PASSWORD%" -f "%USERPROFILE%\.ssh\id_pv" >nul 2>&1
 
 :: Check the exit code (0 = Correct passphrase, 1 = Incorrect)
 if %errorlevel% equ 0 (
