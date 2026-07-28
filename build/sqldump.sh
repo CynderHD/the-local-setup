@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 mysqldump \
     -h 127.0.0.1 -P 3307 \
