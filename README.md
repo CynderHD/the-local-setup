@@ -2,12 +2,13 @@
 
 Local setup is hard. Thankfully, this repo does most of it for you!
 
-If anything isn't working, reach out to a tech leader for assistance.
+If anything isn't working, check out the [FAQ](#faq). If that doesn't solve your problem, please reach out to a tech leader for assistance!
 
 ## Prerequisites
 
-- **Docker:** If you're on a sane operating system, you should be able to install docker via [Docker Desktop](https://docs.docker.com/desktop). Otherwise, you can install the [Docker Engine](https://docs.docker.com/engine/install/) as a CLI-only tool.
-- **Bash or Cmd:** If you're on windows, you should be able to run the `*.bat` files with either Powershell or Cmd. If you're on MacOS or Linux, you should be able to run the `*.sh` files with whatever terminal emulator you use. They do have a shebang for `/usr/bin/bash`, so nixos users may need special setup for that.
+- **WSL:** If you're on Windows, you need to have set up [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+- **Docker:** Install docker via [Docker Desktop](https://docs.docker.com/desktop). Don't install docker engine (the `docker` package on linux). You'll have to install it from Docker's website or the AUR.
+- **Bash or Cmd:** If you're on windows, you should be able to run the `*.bat` files with either Powershell or Cmd. If you're on MacOS or Linux, you should be able to run the `*.sh` files with whatever terminal emulator you use. They do have a shebang for `/usr/bin/env bash`, so nixos users may need special setup for that.
 - **SSH:** If you haven't set up an SSH key or PAT for PV yet, see the [Setting up SSH](#setting-up-ssh) for details on how to do that.
 
 ## Setup
@@ -63,3 +64,5 @@ If you're not a tech leader, you can safely ignore this section. Have fun coding
 Otherwise, I hope hell isn't too warm for you.
 
 See the [build README](./build/README.md) for instructions on how to build and publish new images.
+
+## FAQ
