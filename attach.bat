@@ -1,32 +1,35 @@
 @echo off
 
 SET "DOCKER_CLI_HINTS=false"
+SET "w=/home/pv"
 
 IF NOT "%~1" == "" (
     IF "%~1" == "website" (
-        SET "a=cd pv/the-website"
+        SET "w=%w%/pv/the-website"
     ) ELSE IF "%~1" == "api" (
-        SET "a=cd pv/the-api"
+        SET "w=%w%pv/the-api"
     ) ELSE IF "%~1" == "bot" (
-        SET "a=cd pv/the-discord-bot"
+        SET "w=%w%/pv/the-discord-bot"
+    ) ELSE IF "%~1" == "contracts" (
+        SET "w=%w%/pv/the-contracts"
     )
 
-    IF DEFINED a (
+    IF NOT "%w%" == "" IF NOT "%~1" == "contracts" (
         IF "%~2" == "run" (
-            SET "b= && pnpm dev"
+            SET "c=pnpm dev"
         ) ELSE IF "%~2" == "deploy" (
             IF "%~1" == "bot" (
-                SET "b= && pnpm dev-deploy"
+                SET "c=pnpm dev-deploy"
             ) ELSE (
                 echo 'deploy' can only be used with 'the-discord-bot'. Running 'dev'.
-                SET "b= && pnpm dev"
+                SET "c=pnpm dev"
             )
         )
     )
 )
 
-IF DEFINED a (
-    SET c= -c "source ~/env.sh && %a%%b% && exec bash -i"
+IF DEFINED c (
+    SET c= -i -c "%c%"
 )
 
-docker exec -it the-local-setup /bin/bash%c%
+echo docker exec -it -w %w% the-local-setup /bin/bash%c%
