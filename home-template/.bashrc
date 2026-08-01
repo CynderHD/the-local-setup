@@ -8,3 +8,4 @@ eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_pv
 
 source ~/env.sh
+source /usr/share/bash-completion/completions/git
