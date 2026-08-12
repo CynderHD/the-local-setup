@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 eval $(ssh-agent -s)
-ssh-add ~/.ssh/id_pv
+echo "$SSH_PASSPHRASE" | sshpass -P "Enter passphrase" ssh-add ~/.ssh/id_pv
 
 mkdir -p ~/pv
 cd ~/pv
