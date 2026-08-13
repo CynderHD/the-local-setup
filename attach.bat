@@ -12,6 +12,8 @@ IF NOT "%~1" == "" (
         SET "w=%w%/pv/the-discord-bot"
     ) ELSE IF "%~1" == "contracts" (
         SET "w=%w%/pv/the-contracts"
+    ) ELSE IF "%~1" == "db" (
+        SET "c=mariadb -u root -padmin localhost"
     )
 
     IF NOT "%w%" == "" IF NOT "%~1" == "contracts" (
