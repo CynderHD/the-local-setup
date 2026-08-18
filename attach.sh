@@ -13,6 +13,8 @@ if [ "$1" ]; then
         W="$W/pv/the-discord-bot"
     elif [ "$1" = "contracts" ]; then
         W="$W/pv/the-contracts"
+    elif [ "$1" = "db" ]; then
+        C="mariadb -u root -padmin localhost"
     fi
 
     if [ "$W" != "/home/pv" ] && [ "$1" != "contracts" ]; then
