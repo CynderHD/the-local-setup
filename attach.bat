@@ -34,4 +34,4 @@ IF DEFINED c (
     SET c= -i -c "%c%"
 )
 
-echo docker exec -it -w %w% the-local-setup /bin/bash%c%
+docker exec -it -w %w% the-local-setup /bin/bash%c%
