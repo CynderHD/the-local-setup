@@ -1,13 +1,13 @@
-@echo off
+@ECHO OFF
 
 IF "%~1"=="" (
-    echo You have to pass your github username!
-    exit /b 1
+    ECHO You have to pass your github username!
+    EXIT /B 1
 )
 
 IF NOT EXIST ".access-token" (
-    echo No .access-token file found! Follow the README to create one.
-    exit /b 1
+    ECHO No .access-token file found! Follow the README to create one.
+    EXIT /B 1
 )
 
-type .access-token | docker login "ghcr.io" -u "$1" --password-stdin
+TYPE .access-token | docker login "ghcr.io" -u "$1" --password-stdin
