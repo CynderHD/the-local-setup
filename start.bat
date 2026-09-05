@@ -22,13 +22,20 @@ FOR /F "delims=" %%i IN ('powershell -Command "$p = Read-Host -AsSecureString; [
 ssh-keygen -y -P "%SSH_PASSWORD%" -f "%USERPROFILE%\.ssh\id_pv" >nul 2>&1
 
 :: Check the exit code (0 = Correct passphrase, 1 = Incorrect)
-IF %errorlevel% EQU 0 (
+IF %ERRORLEVEL% EQU 0 (
     ECHO.
     ECHO Success: Passphrase is correct for this private key.
 ) ELSE (
     ECHO Failure: Incorrect passphrase or invalid private key file.
     EXIT /B 1
 )
+
+git stash -u
+IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+git pull
+IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+git stash pop
+IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
 
 MKDIR pv 2>nul
 

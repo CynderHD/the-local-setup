@@ -23,6 +23,10 @@ else
     exit 1
 fi
 
+git stash -u || exit 1
+git pull || exit 1
+git stash pop || exit 1
+
 mkdir -p pv
 
 docker rm -f the-local-setup

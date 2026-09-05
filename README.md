@@ -17,7 +17,7 @@ I'm going to refer to all scripts here as `*.sh`, but just know that there's a `
 
 1. Make sure docker is running. You can test by running `docker ps` in your terminal; if it doesn't fail, you're good to go!
 1. Verify that `~/.ssh/id_pv` and `~/.ssh/id_pv.pub` exist. If they don't, or you're not sure, see [Setting up SSH](#setting-up-ssh).
-1. Verify that your Github Personal Access Token exists in [.access-token](.access-token). If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
+1. Verify that your Github Personal Access Token exists in [.access-token]. If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
 1. Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.
 1. Feel free to update any other configs as you see fit! I'd recommend against removing anything from [install.sh](./home/install.sh) or [.bashrc](./home/.bashrc) unless you're confident in what you're doing though.
 1. Run `./login.sh YourGithubUsername`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
@@ -40,7 +40,7 @@ You'll need a Github PAT (Personal Access Token) to be able to download the cont
 1. Log into your PV github, and go to Settings
 2. Go to 'Credentials', then 'Personal access tokens (classic)'
 3. Generate a new token, and add the `read:packages` scope.
-4. Copy the resulting keystring and paste it into [.access-token](./.access-token) (you may need to create the file).
+4. Copy the resulting keystring and paste it into [.access-token] (you may need to create the file).
 
 If all of that is done properly, running `./login.sh` should succeed.
 
@@ -91,3 +91,11 @@ Otherwise, I hope hell isn't too warm for you.
 See the [build README](./build/README.md) for instructions on how to build and publish new images.
 
 ## FAQ
+
+> Running [start.sh] gave me a merge conflict!
+
+We occationaly update default [home] configurations, which are synced any time you run [start.sh]. This may cause a merge conflict if you have local configurations. Resolve the conflicts to the best of your ability and re-run [start.sh] to fix the issue.
+
+[home]: ./home/
+[.access-token]: ./.access-token
+[start.sh]: ./start.sh
