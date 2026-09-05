@@ -30,12 +30,17 @@ IF %ERRORLEVEL% EQU 0 (
     EXIT /B 1
 )
 
-git stash -u
-IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
-git pull
-IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
-git stash pop
-IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+FOR /F "tokens=*" %%i IN ('git rev-parse --abbrev-ref HEAD 2^>nul') DO SET "BRANCH=%%i"
+IF "%BRANCH%" == "main" (
+    ECHO Syncing with origin...
+    git stash -u
+    IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+    git pull
+    IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+    git stash pop
+    IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+    ECHO Sync complete!
+)
 
 MKDIR pv 2>nul
 
@@ -46,7 +51,7 @@ docker build ^
     --secret "id=sshpub,src=%USERPROFILE%\.ssh\id_pv.pub" ^
     --build-arg MODE=%MODE% ^
     --tag the-local-setup:latest ^
-    --no-cache-filter base ^
+    --no-cache-filter setup-ssh ^
     .
 IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
 

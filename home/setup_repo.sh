@@ -17,10 +17,13 @@ fi
         cd $1
     fi
 
+    echo
     if [ -d "$2" ]; then
+        echo "=== Pulling $1/$2 ==="
         cd "$2"
         git pull
     else
+        echo "=== Cloning $1/$2 ==="
         git clone "git@github.com:$1/$2" "$2" || exit 1
         cd "$2"
     fi

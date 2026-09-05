@@ -23,9 +23,13 @@ else
     exit 1
 fi
 
-git stash -u || exit 1
-git pull || exit 1
-git stash pop || exit 1
+if [ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" = "main" ]; then
+    echo "Syncing with origin..."
+    git stash -u || exit 1
+    git pull || exit 1
+    git stash pop || exit 1
+    echo "Sync complete!"
+fi
 
 mkdir -p pv
 
@@ -36,7 +40,7 @@ docker build \
     --secret "id=sshpub,src=$HOME/.ssh/id_pv.pub" \
     --build-arg MODE=$MODE \
     --tag the-local-setup:latest \
-    --no-cache-filter base \
+    --no-cache-filter setup-ssh \
     . \
     || exit 1
 
