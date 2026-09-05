@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+if [ "$1" = "" ]; then
+    MODE=private
+elif [ "$1" = "private" ] || [ "$1" = "public" ]; then
+    MODE=$1
+else
+    echo "Invalid mode $1! Must be 'public' or 'private'"
+    exit 1
+fi
+
 # Clear any pre-existing value
 unset -v SSH_PASSWORD
 
@@ -19,8 +28,12 @@ mkdir -p pv
 docker rm -f the-local-setup
 
 docker build \
-    --secret "id=ssh,src=$HOME/.ssh/id_pv" --secret "id=sshpub,src=$HOME/.ssh/id_pv.pub" \
-    --tag the-local-setup:latest --no-cache . \
+    --secret "id=ssh,src=$HOME/.ssh/id_pv" \
+    --secret "id=sshpub,src=$HOME/.ssh/id_pv.pub" \
+    --build-arg MODE=$MODE \
+    --tag the-local-setup:latest \
+    --no-cache-filter base \
+    . \
     || exit 1
 
 docker run \

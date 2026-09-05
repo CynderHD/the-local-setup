@@ -1,5 +1,16 @@
 @ECHO OFF
 
+IF "%~1" == "" (
+    SET "MODE=private"
+) ELSE IF "%~1" == "private" (
+    SET "MODE=private"
+) ELSE IF "%~1" == "public" (
+    SET "MODE=public"
+) ELSE (
+    ECHO Invalid mode %1! Must be 'public' or 'private'
+    EXIT /B 1
+)
+
 :: Clear preexisting value
 SET MY_VAR=
 
@@ -24,8 +35,12 @@ MKDIR pv 2>nul
 docker rm -f the-local-setup
 
 docker build ^
-    --secret "id=ssh,src=%USERPROFILE%\.ssh\id_pv" --secret "id=sshpub,src=%USERPROFILE%\.ssh\id_pv.pub" ^
-    --tag the-local-setup:latest --no-cache .
+    --secret "id=ssh,src=%USERPROFILE%\.ssh\id_pv" ^
+    --secret "id=sshpub,src=%USERPROFILE%\.ssh\id_pv.pub" ^
+    --build-arg MODE=%MODE% ^
+    --tag the-local-setup:latest ^
+    --no-cache-filter base ^
+    .
 IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
 
 docker run ^

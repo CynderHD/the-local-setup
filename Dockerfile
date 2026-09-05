@@ -1,17 +1,22 @@
-FROM ghcr.io/progressive-victory/the-local-setup:latest AS base
+# Use public or private image
+ARG MODE=private
+FROM ghcr.io/progressive-victory/the-local-setup:latest AS base-private
+FROM ghcr.io/progressive-victory/the-local-setup-public:latest AS base-public
+FROM base-${MODE} AS base
+
+# Enable interactive CLI tools
 WORKDIR /home/pv
 USER root
-
 ENV DEBIAN_FRONTEND=interactive
 
+# Set up SSH keys
 COPY --chown=pv:pv home/ /home/pv/
-
 RUN --mount=type=secret,id=ssh cp /run/secrets/ssh /home/pv/.ssh/id_pv
 RUN --mount=type=secret,id=sshpub cp /run/secrets/sshpub /home/pv/.ssh/id_pv.pub
-
 RUN chown pv /home/pv/.ssh/id_pv \
     && chown pv /home/pv/.ssh/id_pv.pub
 
+# Configure scripts
 USER pv
 RUN chmod 600 /home/pv/.ssh/id_pv \
     && chmod 644 /home/pv/.ssh/id_pv.pub \

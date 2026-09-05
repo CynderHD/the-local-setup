@@ -7,7 +7,8 @@ docker buildx build \
     --secret id=env,src=.env \
     --tag ghcr.io/progressive-victory/the-local-setup:latest \
     --no-cache-filter setup-env \
-    . || exit 1
+    . \
+    || exit 1
 
 docker buildx build \
     --platform linux/amd64,linux/arm64 \
