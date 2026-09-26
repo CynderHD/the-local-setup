@@ -16,17 +16,33 @@ If anything isn't working, check out the [FAQ](#faq). If that doesn't solve your
 I'm going to refer to all scripts here as `*.sh`, but just know that there's a `*.bat` alternative for Windows users.
 
 1. Make sure docker is running. You can test by running `docker ps` in your terminal; if it doesn't fail, you're good to go!
-2. Verify that `~/.ssh/id_pv` and `~/.ssh/id_pv.pub` exist. If they don't, or you're not sure, see [Setting up SSH](#setting-up-ssh).
-3. Verify that your Github Personal Access Token exists in [.access-token](.access-token). If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
-4. Copy [home-template](./home-template) and rename it to [home](./home).
-    - Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.
-    - Feel free to update any other configs as you see fit! I'd recommend against removing anything from [install.sh](./home/install.sh) or [.bashrc](./home/.bashrc) unless you're confident in what you're doing though.
-5. Run `./login.sh YourGithubUsername`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
-6. Run `./start.sh`. This will create a container which runs indefinitely, which is great for attaching into as a devcontainer.
+1. Verify that `~/.ssh/id_pv` and `~/.ssh/id_pv.pub` exist. If they don't, or you're not sure, see [Setting up SSH](#setting-up-ssh).
+1. Verify that your Github Personal Access Token exists in [.access-token]. If it doesn't, see [Setting up a Github PAT](#setting-up-a-github-pat).
+1. Configure the [.gitconfig](./home/.gitconfig) with your PV Github username and email.
+1. Feel free to update any other configs as you see fit! I'd recommend against removing anything from [install.sh](./home/install.sh) or [.bashrc](./home/.bashrc) unless you're confident in what you're doing though.
+1. Run `./login.sh YourGithubUsername`. This will authenticate you with the Github Container Repository so you can pull down the container image. If it fails, you may have misconfigured your PAT or SSH key.
+1. Run `./start.sh [public|private]`. This will create a container which runs indefinitely, which is great for attaching into as a devcontainer. Use `public` if you don't have access to [the-api](https://github.com/Progressive-Victory/the-api), `private` otherwise.
 
 **Note:** This container will keep running until you kill it. You can kill it in the Docker Desktop, or by running `docker rm -f the-local-setup`.
 
-**Note 2:** This container will not start on boot. To restart the container, run `./start.sh`.
+**Note 2:** This container will not start on boot. To restart the container, run `./start.sh [public|private]` again.
+
+### Setting up SSH
+
+If you've already created a PV ssh key on your github account, all you have to do is rename them `id_pv` and `id_pv.pub` respectively. Make sure they're in `~/.ssh/`! That'll be `/home/<username>/.ssh/` for linux users, `/Users/<username>/.ssh/` for MacOS users, and `C:\Users\<username>\.ssh\` for Windows users (or `D:\`, or `E:\`, etc.).
+
+If you haven't, follow [this guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to create your keys. Make sure the keys are named `id_pv[.pub]` on your local computer, or rename them if they're not.
+
+### Setting up a Github PAT
+
+You'll need a Github PAT (Personal Access Token) to be able to download the container image, since it's private.
+
+1. Log into your PV github, and go to Settings
+2. Go to 'Credentials', then 'Personal access tokens (classic)'
+3. Generate a new token, and add the `read:packages` scope.
+4. Copy the resulting keystring and paste it into [.access-token] (you may need to create the file).
+
+If all of that is done properly, running `./login.sh` should succeed.
 
 ## Usage
 
@@ -42,22 +58,18 @@ If you need to adjust any environment variables, such as the-website's target AP
 
 ### Shortcuts
 
-Shortcuts for the main repositories exist as command-line flags for the `attach.[sh|bat]` scripts! You can use the following:
+Shortcuts for the main repositories exist as command-line flags for the `./attach.sh` scripts. You can use the following:
 
-- First argument
-  - `api`
-  - `bot`
-  - `contracts`
-  - `db`
-    - Connects directly to the local database
-  - `website`
-- Second argument
-  - `run`
-    - Runs `pnpm dev` in the repository
-  - `deploy`
-    - If you are going to `the-discord-bot`, this runs `pnpm dev-deploy`. Otherwise, it is the same behavior as `run`.
+- `./attach.sh api [run]`
+- `./attach.sh bot [run|deploy]`
+- `./attach.sh contracts`
+- `./attach.sh website [run]`
 
-Examples (in `bash`; for Windows users, just replace `.sh` with `.bat`):
+The first argument determines the repo to enter. Passing `run` automatically runs `pnpm dev` in that directory, and passing `deploy` runs `pnpm dev-deploy`.
+
+You can also run `./attach.sh db` to connect directly to the local database.
+
+#### Examples
 
 ```bash
 # automatically move to the API repo
@@ -70,23 +82,6 @@ Examples (in `bash`; for Windows users, just replace `.sh` with `.bat`):
 ./attach.sh db
 ```
 
-## Setting up SSH
-
-If you've already created a PV ssh key on your github account, all you have to do is rename them `id_pv` and `id_pv.pub` respectively. Make sure they're in `~/.ssh/`! That'll be `/home/<username>/.ssh/` for linux users, `/Users/<username>/.ssh/` for MacOS users, and `C:\Users\<username>\.ssh\` for Windows users (or `D:\`, or `E:\`, etc.).
-
-If you haven't, follow [this guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to create your keys. Make sure the keys are named `id_pv[.pub]` on your local computer, or rename them if they're not.
-
-### Setting up a Github PAT
-
-You'll need a Github PAT (Personal Access Token) to be able to download the container image, since it's private.
-
-1. Log into your PV github, and go to Settings
-2. Go to 'Credentials', then 'Personal access tokens (classic)'
-3. Generate a new token, and add the `read:packages` scope.
-4. Copy the resulting keystring and paste it into [.access-token](./.access-token) (you may need to create the file).
-
-If all of that is done properly, running `./login.sh` should succeed.
-
 ## Building new Images
 
 If you're not a tech leader, you can safely ignore this section. Have fun coding!
@@ -96,3 +91,11 @@ Otherwise, I hope hell isn't too warm for you.
 See the [build README](./build/README.md) for instructions on how to build and publish new images.
 
 ## FAQ
+
+> Running [start.sh] gave me a merge conflict!
+
+We occationaly update default [home] configurations, which are synced any time you run [start.sh]. This may cause a merge conflict if you have local configurations. Resolve the conflicts to the best of your ability and re-run [start.sh] to fix the issue.
+
+[home]: ./home/
+[.access-token]: ./.access-token
+[start.sh]: ./start.sh

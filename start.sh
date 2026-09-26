@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+if [ "$1" = "" ]; then
+    MODE=private
+elif [ "$1" = "private" ] || [ "$1" = "public" ]; then
+    MODE=$1
+else
+    echo "Invalid mode $1! Must be 'public' or 'private'"
+    exit 1
+fi
+
 # Clear any pre-existing value
 unset -v SSH_PASSWORD
 
@@ -14,13 +23,25 @@ else
     exit 1
 fi
 
+if [ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" = "main" ]; then
+    echo "Syncing with origin..."
+    git stash -u || exit 1
+    git pull || exit 1
+    git stash pop || exit 1
+    echo "Sync complete!"
+fi
+
 mkdir -p pv
 
 docker rm -f the-local-setup
 
 docker build \
-    --secret "id=ssh,src=$HOME/.ssh/id_pv" --secret "id=sshpub,src=$HOME/.ssh/id_pv.pub" \
-    --tag the-local-setup:latest --no-cache . \
+    --secret "id=ssh,src=$HOME/.ssh/id_pv" \
+    --secret "id=sshpub,src=$HOME/.ssh/id_pv.pub" \
+    --build-arg MODE=$MODE \
+    --tag the-local-setup:latest \
+    --no-cache-filter setup-ssh \
+    . \
     || exit 1
 
 docker run \

@@ -1,4 +1,4 @@
-@echo off
+@ECHO OFF
 
 SET "DOCKER_CLI_HINTS=false"
 SET "w=/home/pv"
@@ -23,7 +23,7 @@ IF NOT "%~1" == "" (
             IF "%~1" == "bot" (
                 SET "c=pnpm dev-deploy"
             ) ELSE (
-                echo 'deploy' can only be used with 'the-discord-bot'. Running 'dev'.
+                ECHO 'deploy' can only be used with 'the-discord-bot'. Running 'dev'.
                 SET "c=pnpm dev"
             )
         )
